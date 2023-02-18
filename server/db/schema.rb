@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_17_113641) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_18_062724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_113641) do
   create_table "machines", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "location_id", null: false
+    t.index ["location_id"], name: "index_machines_on_location_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -32,6 +34,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_113641) do
     t.text "error_message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "payment_id", null: false
+    t.index ["payment_id"], name: "index_orders_on_payment_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -39,6 +43,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_113641) do
     t.datetime "paid_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "machine_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["machine_id"], name: "index_payments_on_machine_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,4 +56,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_113641) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "machines", "locations"
+  add_foreign_key "orders", "payments"
+  add_foreign_key "payments", "machines"
+  add_foreign_key "payments", "users"
 end
