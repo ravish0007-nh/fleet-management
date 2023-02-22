@@ -14,16 +14,14 @@ function Machines() {
 
   return (
     <>
-      <h1>Machines</h1>
-      <ul>
-        {machines.map((machine) => {
-          return (
-            <li key={machine.id}>
-              {machine.id} 
-            </li>
-          );
-        })}
-      </ul>
+      <div className="border-2 p-4">
+        <h1 className="m-auto w-1/2">Machines</h1>
+        <ul>
+          {machines.map((machine) => {
+            return <li key={machine.id}>id: {machine.id}, location_id: {machine.location_id}</li>;
+          })}
+        </ul>
+      </div>
     </>
   );
 }

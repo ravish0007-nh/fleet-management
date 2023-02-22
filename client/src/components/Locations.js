@@ -14,17 +14,22 @@ function Locations() {
 
   return (
     <>
-      <h1>Locations</h1>
-      <ul>
+    <div className="border-2 p-4 space-y-2">
+      <h1 className="m-auto w-1/2">Locations</h1>
+      <ul className="space-y-2">
         {locations.map((location) => {
           return (
-            <li key={location.id}>
-              <p>{location.address} </p>
-              <p>{location.latitude}, {location.longitude}</p>
+            <li key={location.id}
+            className='border p-2 border-black'
+            >
+              <p>latitude: {location.latitude}, longitude: {location.longitude}</p>
+              <p>location_id: {location.id}</p>
+              <p>address: {location.address}</p>
             </li>
           );
         })}
       </ul>
+      </div>
     </>
   );
 }
