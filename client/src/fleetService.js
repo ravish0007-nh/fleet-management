@@ -37,6 +37,18 @@ class FleetService {
   }
 
 
+  static async addLocation(address, latitude, longitude) {
+    try {
+      const response = await axios.post(`${BASE_URL}/locations`, {address, latitude, longitude}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
+
   static async getUsers() {
     try {
       const response = await axios.get(`${BASE_URL}/users`) 
