@@ -1,10 +1,14 @@
-
 import './index.css';
+import Machines  from './components/Machines'
+import Locations from './components/Locations'
+
 function App() {
+
   return (
-    <h1 class="text-3xl text-red-500">
-      Hello world!
-    </h1>
+    <>
+      <Machines />
+      <Locations />
+    </>
   );
 }
 
