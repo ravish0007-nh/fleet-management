@@ -10,7 +10,18 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return []
+      return null
+    }
+  }
+
+  static async addMachine(location_id) {
+    try {
+      const response = await axios.post(`${BASE_URL}/machines`, {location_id}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
     }
   }
 
@@ -21,7 +32,7 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return []
+      return null
     }
   }
 
@@ -33,7 +44,7 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return []
+      return null
     }
   }
 }

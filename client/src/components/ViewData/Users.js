@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FleetService from "../fleetService.js";
+import FleetService from "../../fleetService.js";
 
 function Machines() {
   const [users, setUsers] = useState([]);

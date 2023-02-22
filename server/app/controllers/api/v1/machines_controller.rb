@@ -46,6 +46,6 @@ class Api::V1::MachinesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def machine_params
-      params.fetch(:machine, {})
+      params.require(:machine).permit(:location_id)
     end
 end
