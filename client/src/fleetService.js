@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+const AUTH_URL = 'http://localhost:3000/auth'
 const BASE_URL = 'http://localhost:3000/api/v1'
 
 class FleetService {
@@ -17,6 +18,29 @@ class FleetService {
   static async addMachine(location_id) {
     try {
       const response = await axios.post(`${BASE_URL}/machines`, {location_id}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
+  static async loginUser(email, password) {
+    try {
+      const response = await axios.post(`${AUTH_URL}/login`, {email, password}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
+
+  static async signUpUser(full_name, email, password) {
+    try {
+      const response = await axios.post(`${AUTH_URL}/signup`, {full_name, email, password}) 
       return response.data
     }
     catch (error) {

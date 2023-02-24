@@ -1,16 +1,27 @@
-import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {useState, useContext} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+
+import {UserContext} from '../context/User'
+
+import FleetService from '../fleetService'
+
 
 function SignUp() {
+
+
+  const user = useContext(UserContext)
+  const navigate = useNavigate()
 
   const [fullname, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    FleetService.signUpUser(fullname, email, password).then((data) => {
+      user.login(data)
+      navigate('/')
+    })
   }
 
  return (
