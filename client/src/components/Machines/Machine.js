@@ -1,12 +1,15 @@
-
 import { useToast } from '../../Toast';
+import FleetService from '../../fleetService'
 
 function Machine({machine}) {
 
   const toast = useToast();
 
   const handleClick = (e) => {
-    toast.open(`Payment made at Machine#${machine.id}`);
+
+    FleetService.makePayment(machine.id).then((data) => {
+      toast.open(`Payment made at Machine#${machine.id}`);
+    })
   }
 
   return(

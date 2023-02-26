@@ -15,10 +15,14 @@ class Api::V1::PaymentsController < ApplicationController
 
   # POST /payments
   def create
-    @payment = Payment.new(payment_params)
+    @payment = Payment.new(user_id: @current_user.id, machine_id: params[:machine_id], amount: 5, paid_at: DateTime.now)
 
     if @payment.save
-      render json: @payment, status: :created
+      @order = Order.new(payment_id: @payment.id, status: "pending")
+      if @order.save
+        @order.update(status: "completed")
+        render json: @payment, status: :created
+      end
     else
       render json: @payment.errors, status: :unprocessable_entity
     end
@@ -46,6 +50,6 @@ class Api::V1::PaymentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def payment_params
-      params.require(:payment).permit(:amount, :paid_at)
+      params.permit(:machine_id)
     end
 end

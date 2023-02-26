@@ -90,6 +90,18 @@ class FleetService {
   }
 
 
+  static async makePayment(machine_id) {
+    try {
+      const response = await axios.post(`${BASE_URL}/payments`, {machine_id}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
+
   static async getUsers() {
     try {
       const response = await axios.get(`${BASE_URL}/users`) 
