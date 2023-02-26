@@ -4,6 +4,15 @@ const AUTH_URL = 'http://localhost:3000/auth'
 const BASE_URL = 'http://localhost:3000/api/v1'
 
 class FleetService {
+
+  static setAuthHeader = (token) => {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  };
+
+  static removeAuthHeader = () => {
+    delete axios.defaults.headers.common.Authorization;
+  };
+
   static async getMachines() {
     try {
       const response = await axios.get(`${BASE_URL}/machines`) 
@@ -29,7 +38,10 @@ class FleetService {
   static async loginUser(email, password) {
     try {
       const response = await axios.post(`${AUTH_URL}/login`, {email, password}) 
-      return response.data
+      sessionStorage.setItem('fleet_token', response.data.token)
+      sessionStorage.setItem('fleet_user', JSON.stringify(response.data.user))
+      this.setAuthHeader(response.data.token)
+      return response.data.user
     }
     catch (error) {
       console.log(error);
@@ -37,6 +49,11 @@ class FleetService {
     }
   }
 
+  static signOutUser() {
+      sessionStorage.removeItem('fleet_user')
+      sessionStorage.removeItem('fleet_token')
+      this.removeAuthHeader()
+  }
 
   static async signUpUser(full_name, email, password) {
     try {

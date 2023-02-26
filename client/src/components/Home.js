@@ -1,6 +1,9 @@
 import {useContext, useEffect} from 'react'
 import  {UserContext} from '../context/User'
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+
+import NavBar from './NavBar'
+import Machines from './Machines'
 
 function Home() {
 
@@ -14,7 +17,10 @@ function Home() {
   }, [user])
 
   return (
-    <h1> Hello world</h1>
+    <div className='mt-2'>
+      <NavBar />
+      <Machines />
+    </div>
   )
 }
 

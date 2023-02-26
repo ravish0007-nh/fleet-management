@@ -11,7 +11,7 @@ class AuthenticationController < ApplicationController
     @user = User.new(signup_params)
     if @user.save
       token = JsonWebToken.encode(user_id: @user.id)
-      render json: { token: token}, status: :ok
+      render json: {user: {full_name: @user.full_name}, token: token}, status: :ok
     else
       render json: {error: @user.errors }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class AuthenticationController < ApplicationController
     @user = User.find_by_email(params[:email])
     if @user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: @user.id)
-      render json: { token: token}, status: :ok
+      render json: {user: {full_name: @user.full_name}, token: token}, status: :ok
     else
       render json: { error: 'unauthorized'}, status: :unauthorized
     end
