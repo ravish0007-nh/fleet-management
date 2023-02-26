@@ -1,8 +1,12 @@
 
+import { useToast } from '../../Toast';
+
 function Machine({machine}) {
 
-  const handleClick = (e) => {
+  const toast = useToast();
 
+  const handleClick = (e) => {
+    toast.open(`Payment made at Machine#${machine.id}`);
   }
 
   return(
