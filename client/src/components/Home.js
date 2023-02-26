@@ -1,9 +1,11 @@
 import {useContext, useEffect} from 'react'
 import  {UserContext} from '../context/User'
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate, Outlet} from "react-router-dom";
 
 import NavBar from './NavBar'
+import SideBar from './SideBar'
 import Machines from './Machines'
+import ViewData from './ViewData'
 
 function Home() {
 
@@ -19,7 +21,10 @@ function Home() {
   return (
     <div className='mt-2'>
       <NavBar />
-      <Machines />
+      <div className='flex flex-row'>
+        <SideBar />
+        <Outlet />
+      </div>
     </div>
   )
 }
