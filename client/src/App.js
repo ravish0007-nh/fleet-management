@@ -9,6 +9,7 @@ import ViewData  from './components/ViewData'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Machines from './components/Machines'
+import Orders from './components/Orders'
 
 import UserProvider from './context/User'
  
@@ -18,8 +19,9 @@ function App() {
     <UserProvider>
       <Routes>
           <Route path='/' element={<Home />} >
-                <Route path='machines' element={<Machines />} />
+                <Route index path='machines' element={<Machines />} />
                 <Route path='view' element={<ViewData />} />
+                <Route path='orders' element={<Orders />} />
           </Route>
 
           <Route path='/login' element={<Login />} />

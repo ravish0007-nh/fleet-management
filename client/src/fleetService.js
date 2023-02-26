@@ -102,6 +102,18 @@ class FleetService {
   }
 
 
+  static async getOrders() {
+    try {
+      const response = await axios.get(`${BASE_URL}/orders`) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
+
   static async getUsers() {
     try {
       const response = await axios.get(`${BASE_URL}/users`) 

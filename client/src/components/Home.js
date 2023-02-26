@@ -19,7 +19,7 @@ function Home() {
   }, [user])
 
   return (
-    <div className='mt-2'>
+    <div className='mt-2 mb-10'>
       <NavBar />
       <div className='flex flex-row'>
         <SideBar />

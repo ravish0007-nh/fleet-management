@@ -3,7 +3,10 @@ class Api::V1::OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = Payment \
+              .where(user_id: @current_user.id)  \
+              .joins(:order)  \
+              .where(order: {status: 'completed'}) 
 
     render json: @orders
   end
