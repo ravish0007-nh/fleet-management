@@ -3,7 +3,9 @@ class Api::V1::PaymentsController < ApplicationController
 
   # GET /payments
   def index
-    @payments = Payment.all
+    @payments = Payment \
+                .where(user_id: @current_user.id, status: 'completed')
+    puts @payments
 
     render json: @payments
   end
@@ -15,14 +17,10 @@ class Api::V1::PaymentsController < ApplicationController
 
   # POST /payments
   def create
-    @payment = Payment.new(user_id: @current_user.id, machine_id: params[:machine_id], amount: 5, paid_at: DateTime.now)
+    @payment = Payment.new(user_id: @current_user.id, machine_id: params[:machine_id], amount: 5, paid_at: DateTime.now, status: 'pending')
 
     if @payment.save
-      @order = Order.new(payment_id: @payment.id, status: "pending")
-      if @order.save
-        @order.update(status: "completed")
         render json: @payment, status: :created
-      end
     else
       render json: @payment.errors, status: :unprocessable_entity
     end
@@ -30,7 +28,12 @@ class Api::V1::PaymentsController < ApplicationController
 
   # PATCH/PUT /payments/1
   def update
-    if @payment.update(payment_params)
+    case params[:status]
+    when 'completed'
+      @payment.update(status: 'completed')
+      render json: @payment
+    when 'rejected'
+      @payment.update(status: 'rejected')
       render json: @payment
     else
       render json: @payment.errors, status: :unprocessable_entity
