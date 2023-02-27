@@ -20,7 +20,7 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return null
+      return []
     }
   }
 
@@ -73,7 +73,7 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return null
+      return []
     }
   }
 
@@ -89,8 +89,7 @@ class FleetService {
     }
   }
 
-
-  static async makePayment(machine_id) {
+  static async createPayment(machine_id) {
     try {
       const response = await axios.post(`${BASE_URL}/payments`, {machine_id}) 
       return response.data
@@ -101,15 +100,35 @@ class FleetService {
     }
   }
 
-
-  static async getOrders() {
+  static async acceptPayment(id) {
     try {
-      const response = await axios.get(`${BASE_URL}/orders`) 
+      const response = await axios.put(`${BASE_URL}/payments/${id}`, {status: 'completed'}) 
       return response.data
     }
     catch (error) {
       console.log(error);
       return null
+    }
+  }
+
+  static async rejectPayment(id) {
+    try {
+      const response = await axios.put(`${BASE_URL}/payments/${id}`, {status: 'rejected'}) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+  static async getOrders() {
+    try {
+      const response = await axios.get(`${BASE_URL}/payments`) 
+      return response.data
+    }
+    catch (error) {
+      console.log(error);
+      return []
     }
   }
 
@@ -121,7 +140,7 @@ class FleetService {
     }
     catch (error) {
       console.log(error);
-      return null
+      return []
     }
   }
 }
