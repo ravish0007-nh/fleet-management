@@ -16,8 +16,10 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
     FleetService.loginUser(email, password).then((data) => {
-      user.login(data)
-      navigate('/')
+      if(data) {
+        user.login(data)
+        navigate('/')
+      }
     })
   }
 

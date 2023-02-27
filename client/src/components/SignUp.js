@@ -19,8 +19,10 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault()
     FleetService.signUpUser(fullname, email, password).then((data) => {
-      user.login(data)
-      navigate('/')
+      if(data) {
+        user.login(data)
+        navigate('/')
+      }
     })
   }
 
