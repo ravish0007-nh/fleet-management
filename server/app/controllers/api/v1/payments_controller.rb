@@ -31,6 +31,7 @@ class Api::V1::PaymentsController < ApplicationController
     case params[:status]
     when 'completed'
       @payment.update(status: 'completed')
+      Order.create(payment_id: @payment.id, status: 'completed')
       render json: @payment
     when 'rejected'
       @payment.update(status: 'rejected')
