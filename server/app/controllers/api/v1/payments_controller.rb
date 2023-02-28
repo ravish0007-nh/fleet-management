@@ -20,6 +20,7 @@ class Api::V1::PaymentsController < ApplicationController
     @payment = Payment.new(user_id: @current_user.id, machine_id: params[:machine_id], amount: 5, paid_at: DateTime.now, status: 'pending')
 
     if @payment.save
+        Order.create(payment_id: @payment.id, status: 'created')
         render json: @payment, status: :created
     else
       render json: @payment.errors, status: :unprocessable_entity
@@ -28,13 +29,18 @@ class Api::V1::PaymentsController < ApplicationController
 
   # PATCH/PUT /payments/1
   def update
+    @order = Order.find_by_payment_id(@payment.id)
+    @order.update(status: 'payment initiated')
+
     case params[:status]
     when 'completed'
       @payment.update(status: 'completed')
-      Order.create(payment_id: @payment.id, status: 'completed')
+      @order.update(status: 'payment successful')
+      @order.update(status: 'dispensed')
       render json: @payment
     when 'rejected'
       @payment.update(status: 'rejected')
+      @order.update(status: 'payment rejected')
       render json: @payment
     else
       render json: @payment.errors, status: :unprocessable_entity
